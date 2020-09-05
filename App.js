@@ -10,8 +10,9 @@ const estilos = StyleSheet.create({
 
 export default function App() {
 
+  const mock = {value:{nome:'Fernando', telefone: '11946546273'}, key: '10'}
   // se usarmos uma funçao ao invez de classe podemos usar state com as sequintes declarações
-  const [contatos, setContatos] = useState([]);
+  const [contatos, setContatos] = useState([mock]);
   const [contadorContatos, setContadorContatos] = useState(10);
 
   const apagarContato = (indice) => {
@@ -45,7 +46,7 @@ console.log('contato novo', contato)
           <ContatoItem
             index={contato.item.key}
             contato={contato.item.value}
-            onapagarContato={apagarContato}
+            onApagarContato={apagarContato}
           />
         )}
       />
