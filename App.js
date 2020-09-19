@@ -27,8 +27,11 @@ export default function App() {
 console.log('contato novo', contato)
     if (contato !== undefined && contato.nome !== '' && contato.telefone !== '') {
       setContatos(() => {
-        setContadorContatos(contadorContatos + 2)
-        return [...contatos, { value: contato, key: contadorContatos.toString() }]
+        console.log(' id', typeof contadorContatos)
+        console.log('novo id',  contadorContatos +2)
+        let novoContador  = contadorContatos +2
+        setContadorContatos(novoContador) 
+        return [...contatos, { value: contato, key: novoContador.toString() }]
       })
     }
   }
@@ -36,6 +39,7 @@ console.log('contato novo', contato)
   return (
     <View style={estilos.telaPrincipalView}>
       {/* usuario insere os contatos aqui */}
+      {/* todo: seaparar em uma tela a adiçao de contato  */}
       <ContatoInput
         onAdicionarContato={adicionarContato}
       />
