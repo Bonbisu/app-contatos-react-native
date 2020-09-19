@@ -27,8 +27,6 @@ export default function App() {
 console.log('contato novo', contato)
     if (contato !== undefined && contato.nome !== '' && contato.telefone !== '') {
       setContatos(() => {
-        console.log(' id', typeof contadorContatos)
-        console.log('novo id',  contadorContatos +2)
         let novoContador  = contadorContatos +2
         setContadorContatos(novoContador) 
         return [...contatos, { value: contato, key: novoContador.toString() }]
