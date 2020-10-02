@@ -1,62 +1,69 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, ScrollView, FlatList } from 'react-native';
-import ContatosNavigator from './navigation/ContatosNavigator'
 import ContatoItem from './components/ContatoItem'
 import ContatoInput from './components/ContatoInput'
+import AgendaNavigator from './navigator/AgendaNavigator';
 
-const estilos = StyleSheet.create({
-  telaPrincipalView: { padding: 50 },
-});
+
 
 export default function App() {
 
-  const mock = { value: { nome: 'Fernando', telefone: '11946546273' }, key: '10' }
-  // se usarmos uma funçao ao invez de classe podemos usar state com as sequintes declarações
-  const [contatos, setContatos] = useState([mock]);
-  const [contadorContatos, setContadorContatos] = useState(10);
 
-  const apagarContato = (indice) => {
-    console.log('💩 apagar', indice)
+
+
+
+  const deletarContato = (indice) => {
     setContatos(contatos => {
-      return contatos.filter(contato => contato.key !== indice);
+      setContadorContatos(contadorContatos - 2)
+      return contatos.filter(contato =>  contato.key !== indice);
     })
 
   }
 
-  const adicionarContato = (contato) => {
-    console.log('contato novo', contato)
-    if (contato !== undefined && contato.nome !== '' && contato.telefone !== '') {
-      setContatos(() => {
-        let novoContador = contadorContatos + 2
-        setContadorContatos(novoContador)
-        return [...contatos, { value: contato, key: novoContador.toString() }]
-      })
-    }
-  }
+  // const adicionarContato = (contato) => {
+  //   if (contato !== undefined && contato.nome !== '' && contato.telefone !== '') {
+  //     setContatos(() => {
+  //       setContadorContatos(contadorContatos + 2)
+  //       return [...contatos, { value: contato, key: contadorContatos.toString() }]
+  //     })
+  //   }
+  // }
 
-  return <ContatosNavigator/>
-  // return (
-  //   <View style={estilos.telaPrincipalView}>
-  //     {/* usuario insere os contatos aqui */}
-  //     {/* todo: seaparar em uma tela a adiçao de contato  */}
-  //     <ContatoInput
-  //       onAdicionarContato={adicionarContato}
-  //     />
-  //     <FlatList
-  //       data={contatos}
-  //       renderItem={(contato) => (
-  //         // FlatList sempre mapeia o item da lista colocada em data para um objeto {item: contato}
-  //         <ContatoItem
-  //           index={contato.item.key}
-  //           contato={contato.item.value}
-  //           onApagarContato={apagarContato}
-  //         />
-  //       )}
-  //     />
+  return (
+    <AgendaNavigator />
+    // <View style={estilos.mainView}>
+    //   {/* usuario insere os contatos aqui */}
+    //   <ContatoInput
+    //     onAdicionarContato={adicionarContato}
+    //   />
+    //   <FlatList
+    //     data={contatos}
+    //     renderItem={(contato) => (
+    //       // FlatList sempre mapeia o item da lista colocada em data para um objeto {item: contato}
+    //       <ContatoItem
+    //         index={contato.item.key}
+    //         contato={contato.item.value}
+    //         onDeletarContato={deletarContato}
+    //       />
+    //     )}
+    //   />
 
-  //   </View>
-  // );
+    // </View>
+  );
 }
 
 
+const estilos = StyleSheet.create({
+  mainView: { 
+    left : "20%",
+    top : "10%",
+    width : "60%",
+    height : 300,
+    borderRadius : 20,
+    borderStyle : "solid",
+    borderWidth :1.5,
+    paddingBottom:15,
+  
+  },
+});
