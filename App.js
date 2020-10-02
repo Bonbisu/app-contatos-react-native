@@ -1,17 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, ScrollView, FlatList } from 'react-native';
-import ContatoItem from './components/ContatoItem'
-import ContatoInput from './components/ContatoInput'
+import { StyleSheet} from 'react-native';
 import AgendaNavigator from './navigator/AgendaNavigator';
+import { Provider } from 'react-redux';
+import contatosReducers from './store/contatos-reducers'
+import { 
+  createStore, 
+  combineReducers, 
+  applyMiddleware 
+} from 'redux';
+import reduxThunk from 'redux-thunk';
 
+const rootReducer = combineReducers({
+  contatos: contatosReducers,
+});
 
+const store = createStore (rootReducer, applyMiddleware(reduxThunk));
 
 export default function App() {
-
-
-
-
 
   const deletarContato = (indice) => {
     setContatos(contatos => {
@@ -20,6 +25,7 @@ export default function App() {
     })
 
   }
+
 
   // const adicionarContato = (contato) => {
   //   if (contato !== undefined && contato.nome !== '' && contato.telefone !== '') {
@@ -31,25 +37,10 @@ export default function App() {
   // }
 
   return (
-    <AgendaNavigator />
-    // <View style={estilos.mainView}>
-    //   {/* usuario insere os contatos aqui */}
-    //   <ContatoInput
-    //     onAdicionarContato={adicionarContato}
-    //   />
-    //   <FlatList
-    //     data={contatos}
-    //     renderItem={(contato) => (
-    //       // FlatList sempre mapeia o item da lista colocada em data para um objeto {item: contato}
-    //       <ContatoItem
-    //         index={contato.item.key}
-    //         contato={contato.item.value}
-    //         onDeletarContato={deletarContato}
-    //       />
-    //     )}
-    //   />
+    <Provider store={store} style={estilos.mainView}>
+      <AgendaNavigator />
+    </Provider>
 
-    // </View>
   );
 }
 
