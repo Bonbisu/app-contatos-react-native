@@ -42,7 +42,7 @@ const ContatoInput = (props) => {
             />
             <Button
                 style={estilos.button}
-                color="#4CAF50"
+                color="#855480"
                 title="Adicionar"
                 onPress={() => adicionarContato(contato)}
             />
@@ -53,13 +53,15 @@ const ContatoInput = (props) => {
 const estilos = StyleSheet.create({
     lembreteView: {
         marginBottom: 7
+        ,display : 'block'
     },
 
     lembreteTextInput: {
         borderBottomColor: 'black',
-        borderBottomWidth: 1,
+        // borderBottomWidth: 1,
         marginBottom: 7,
-        padding: 7
+        padding: 10,
+        width : "50%"
     }
 
 })
