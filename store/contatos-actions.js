@@ -24,11 +24,13 @@ export const addContato = (nome, telefone, imagemURI, lng, lat, data) => {
     console.log('\n\n\nimagemURI fora',imagemURI)
     return async dispatch => {
 
-        console.log('\n\n\nimagemURI',imagemURI)
         const nomeArquivo = imagemURI.split('/').pop();
         const novoPath = FileSystem.documentDirectory + nomeArquivo;
+        
+        console.log('\n\n\nInserir contato',nome, telefone, novoPath, lng, lat, data)
         let resultDB;
         try {
+            console.log('nao passou da linha do insert e nao jogou erro nesse caralho')
             resultDB = await insertContato(nome, telefone, novoPath, lng, lat, data);
         }
         catch (err) {

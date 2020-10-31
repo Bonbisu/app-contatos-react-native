@@ -29,7 +29,6 @@ export const init = () => {
 }
 
 export const insertContato = (nome, telefone, imagemURI, lng, lat, data) => {
-    console.log("insertContato", nome, telefone, imagemURI, lng, lat, data);
     return new Promise((resolve, reject) => {
         db.transaction((tx) => {
             tx.executeSql(
