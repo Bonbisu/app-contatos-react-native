@@ -12,6 +12,7 @@ import * as contatosActions from '../store/contatos-actions';
 import Cores from '../constantes/Cores';
 import TiraFoto from '../components/TiraFoto';
 import { set } from 'react-native-reanimated';
+import CapturaLocalizacao from '../components/capturaLocalicazao';
 
 const CadastroContato = (props) => {
     const dispatch = useDispatch();
@@ -19,13 +20,17 @@ const CadastroContato = (props) => {
     const [nome, setNome] = useState ('');
     const [telefone, setTelefone] = useState ('');
     const [imagemURI, setImagemURI] = useState();
+    const [localizacao,setLocalizacao] = useState();
 
     const fotoTirada = imagemURI => {
         setImagemURI(imagemURI);
     }
 
-    const adicionarContato = () => {
-        dispatch(contatosActions.addContato(nome, telefone, imagemURI));
+    const adicionarContato = async() => { 
+        var data = new Date();
+        console.log('adicionando',nome, telefone, imagemURI,(localizacao||{}).lng,(localizacao||{}).lat,data);
+        await dispatch(contatosActions.addContato(nome, telefone, imagemURI,(localizacao||{}).lng,(localizacao||{}).lat,data));
+       
         props.navigation.goBack();
     }
 
@@ -37,8 +42,14 @@ const CadastroContato = (props) => {
     setTelefone(telefone);
     }
 
+    const getLocalizacao = localizacao =>{
+        setLocalizacao(localizacao);
+    }
+
+    
+
     return (
-        <ScrollView style={estilos.main}>
+        <ScrollView>
             <View style={estilos.form}>
                 <Text style={estilos.titulo}>Adicionar Contato</Text>
                     <TextInput 
@@ -54,6 +65,7 @@ const CadastroContato = (props) => {
                         value={telefone}
                     />
                     <TiraFoto onFotoTirada={fotoTirada}/>
+                    <CapturaLocalizacao onLocalizacaoCapturada={getLocalizacao}/>
                     <Button
                         title="Adicionar Contato"
                         color={Cores.primary}
@@ -87,17 +99,6 @@ const estilos = StyleSheet.create ({
     marginBottom: 4,
     padding: 12,
     },
-    main :{
-      left : "20%",
-      top : "10%",
-      width : "60%",
-      height : 300,
-      borderRadius : 20,
-      borderStyle : "solid",
-      borderWidth :1.5,
-      paddingBottom:15,
-      marginBottom: 20
-    }
 });
 
 export default CadastroContato;

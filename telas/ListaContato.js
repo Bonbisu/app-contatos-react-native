@@ -1,21 +1,26 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {View,Text,StyleSheet,Platform,FlatList} from 'react-native';
 import {HeaderButtons,Item} from 'react-navigation-header-buttons';
 import BotaoCabecalho from '../components/BotaoCabecalho'
 import ContatoItem from '../components/ContatoItem'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import * as contatoActions from '../store/contatos-actions'
 
 
-const deletarContato = (indice) => {
-  setContatos(contatos => {
-    setContadorContatos(contadorContatos - 2)
-    return contatos.filter(contato =>  contato.key !== indice);
-  })
+// const deletarContato = (indice) => {
+//   setContatos(contatos => {
+//     setContadorContatos(contadorContatos - 2)
+//     return contatos.filter(contato =>  contato.key !== indice);
+//   })
 
-}
+// }
 
 
 const ListaContatoTela = (props) => {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(contatoActions.listarContatos())
+  });
 const contatos = useSelector(estado => estado.contatos.contatos);
     return (
       <FlatList
@@ -27,7 +32,11 @@ const contatos = useSelector(estado => estado.contatos.contatos);
             index={contatos.item.id}
             telefone={contatos.item.telefone}
             nome={contatos.item.nome}
-            onDeletarContato={deletarContato}
+            lat={contatos.item.lat}
+            lng={contatos.item.lng}
+            data={contatos.item.data}
+
+            // onDelete={deletarContato}
             imagem={contatos.item.imagemURI}
           />
          )}
@@ -38,7 +47,7 @@ const contatos = useSelector(estado => estado.contatos.contatos);
 
 ListaContatoTela.navigationOptions = dadosNavegacao => {
     return {
-      headerTitle: "Lista de lugares",
+      headerTitle: "Lista de Contatos",
       headerRight: () =>{
         return (
           <HeaderButtons
